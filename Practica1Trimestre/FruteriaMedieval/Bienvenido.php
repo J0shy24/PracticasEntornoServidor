@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fruteria</title>
+    <title>Fruteria Bienvenido</title>
 </head>
 <body>
     <h1>Fruteria del Siglo XXI</h1>
@@ -15,11 +15,4 @@
         <input type="text" id="nombreClienteId" name="name" pattern="[A-Z][a-z]{2,}">
     </form>
 </body>
-<?php
- if(isset($_GET['name'])){
-    $nombreCliente=$_GET['name'];
-    $_SESSION['fruitTable']=array();
-    $_SESSION['nombre']=$nombreCliente;
- }
-?>
 </html>
