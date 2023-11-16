@@ -13,7 +13,7 @@ $file=@fopen(FICHERO,"r+") or die("Error en acceder el fichero");
 $visitado=0;
 
 if(file_exists(FICHERO)){
-    $visitado=@file_get_contents(FICHERO);x
+    $visitado=@file_get_contents(FICHERO);
 }
 
 $visitado++;
