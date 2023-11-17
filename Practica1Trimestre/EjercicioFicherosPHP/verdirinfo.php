@@ -13,7 +13,7 @@ $val=array();
 
 foreach($directoryContent as $fichero){
     $filepath=DIRECTORIO."/".$fichero;
-    $tipo=filetype($filepath);
+    $tipo=mime_content_type($filepath);
     $tamano=filesize($filepath);
     array_push($val,[$tipo,$tamano]);
     
@@ -34,7 +34,7 @@ usort($directoryContent,'sortTamaño');
 echo "FICHEROS DEL DIRECTORIO ORDENADO POR TAMAÑO <br><br> ";
 foreach($directoryContent as $key => $value){
     //SOLO ENSEÑAMOS LOS FICHEROS
-    if($value[0]=="file"){
+    if($value[0]!=="directory"){
     echo $key . " | ". $value[0] . " | ". $value[1];
     echo "<br>";
     }
