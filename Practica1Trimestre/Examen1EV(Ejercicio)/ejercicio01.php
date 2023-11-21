@@ -24,7 +24,7 @@ if(isset($_COOKIE['token'])&&($_COOKIE['token']%410==0)){
         header("Location:accesso.php?msg=".urlencode($msg));
         return;
     }
-
+    //Reintegro
     if(isset($_POST['importe'])&&$_POST['Orden']=='Reintegro'&&($_POST['importe']<=intval($fileContent))&&$_POST['importe']>0){
         $num=intval($fileContent)-$_POST['importe'];
         file_put_contents(FICHERO,$num);
@@ -36,7 +36,7 @@ if(isset($_COOKIE['token'])&&($_COOKIE['token']%410==0)){
         header("Location:accesso.php?msg=".urlencode($msg));
         return;
     }
-
+    //Ver Saldo
     if($_POST['Orden']=="Ver saldo"){
         if($fileContent==""){
             $fileContent=0;
