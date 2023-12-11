@@ -73,7 +73,19 @@ function accionPostAlta(){
  
     //<<<< COMPLETAR >>>>>>
     limpiarArrayEntrada($_POST); //Evito la posible inyección de código
-    
+    //Comprobar que no está en blanco
+    if(empty($_POST['nombre'])||empty($_POST['login'])||empty($_POST['clave'])||empty($_POST['comentario'])){
+        $msg="Es obligatorio llenar todos los campos";
+        $_SESSION['msg']=$msg;
+        return;
+    }
+
+    //Comprobar login repetidos
+    if(isset($_SESSION['tuser'][$_POST['login']])){
+        $msg="usuario ya existe";
+        $_SESSION['msg']=$msg;
+        return;
+    }
     //<<<< COMPLETAR y CORREGIR>>>>>>
     $id = $_POST['login'];
     $nuevo = [ $_POST['clave'],$_POST['nombre'],$_POST['comentario']];

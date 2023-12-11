@@ -152,7 +152,13 @@ function limpiarArrayEntrada(array &$entrada)
 {
     // Sin implementar
     // <<<<  IMPLEMENTAR  >>>>> 
+    $eArray= [];
 
+    foreach($entrada as $llave => $valor){
+        $eArray[$llave]=trim(htmlspecialchars($valor));
+    }
+    
+    $entrada=$eArray;
 }
 
 
@@ -160,5 +166,9 @@ function limpiarArrayEntrada(array &$entrada)
 // evitar ataques  CSRF, Cross-Site Request Forgery
 function checkCSRF()
 {
-    // <<<<  IMPLEMENTAR  >>>>>
+    // <<<<  IMPLEMENTAR  >>>>> 
+    if(!isset($_REQUEST['token'])||$_REQUEST['token']!=$_SESSION['token']){
+        echo "token no valido";
+        exit();
+    }
 }
