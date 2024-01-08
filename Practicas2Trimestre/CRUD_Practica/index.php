@@ -1,46 +1,75 @@
 <?php
-
+require_once "app/clientes.php";
+require_once  "app/AcessoDatos.php";
+require_once "app/acciones.php";
+require_once "app/funciones.php";
 session_start();
-
-include_once("app/acessoDatos.php");
-
-define('FPAG', 10);
-
-$midb = AcessoDatos::getModelo();
-$totalfilas = $midb->numClientes();
-if ($totalfilas % FPAG == 0) {
-    $posfin = $totalfilas - FPAG;
-} else {
-    $posfin = $totalfilas - $totalfilas % FPAG;
-}
 
 if (!isset($_SESSION['posini'])) {
     $_SESSION['posini'] = 0;
 }
-$posAux = $_SESSION['posini'];
 
-if (isset($_GET['nav'])) {
+define('FPAG', 10); // Número de clientes por página
 
-    switch ($_GET['nav']) {
-        case "<<":
-            $posAux = 0;
-            break;
-        case ">":
-            $posAux += FPAG;
-            if ($posAux > $posfin) $posAux = $posfin;
-            break;
-        case "<":
-            $posAux -= FPAG;
-            if ($posAux < 0) $posAux = 0;
-            break;
-        case ">>":
-            $posAux = $posfin;
+$db = AcessoDatos::getModelo();
+$total = $db->numClientes();
+ 
+// Calcula cual es la última posición
+if ( $total % FPAG == 0){
+    $posfin = $total - FPAG;
+} else {
+    $posfin = $total - $total % FPAG;
+}
+
+
+
+
+// Primer elemento a mostrar
+$primero = $_SESSION['posini'];
+if ($_SERVER['REQUEST_METHOD'] == "GET") {
+    
+    if (isset($_GET['orden'])) {
+
+        switch ($_GET['orden']) {
+            case "Primero":
+                $primero = 0;
+                break;
+            case "Siguiente":
+                $primero += FPAG;
+                if ($primero > $posfin) $primero = $posfin;
+                break;
+            case "Anterior":
+                $primero -= FPAG;
+                if ($primero < 0) $primero = 0;
+                break;
+            case "Ultimo":
+                $primero = $posfin;
+                break;
+            case "Modificar":
+                accionModificar($_GET['id']);
+                break;
+            case "Detalles":
+                accionDetalles($_GET['id']);
+                break;
+            case "Borrar":
+                accionBorrar($_GET['id']);
+            case "Nuevo":
+                accionAlta();
+        }
+        $_SESSION['posini'] = $primero;
+    }   
+} else {
+    if (  isset($_POST['orden'])){
+        limpiarArrayEntrada($_POST); //Evito la posible inyección de código
+         switch($_POST['orden']) {
+             case "Nuevo"    : accionPostAlta(); break;
+             case "Modificar": accionPostModificar(); break;
+             case "Detalles":; // No hago nada
+         }
     }
 }
-$_SESSION['posini'] = $posAux;
 
-// Accedo al Modelo
-$tvalores = $midb->getClientes($posAux, FPAG);
 
-// Muestro la página principal
-include_once "app/plantilla/principal.php";
+
+$tclientes = $db->getClientes($primero, FPAG);
+include "app/plantilla/principal.php";

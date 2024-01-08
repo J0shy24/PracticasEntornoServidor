@@ -8,8 +8,13 @@ include_once("clientes.php");
   Constructor privado, metodos estaticos
 */
 class AcessoDatos{
-    private static $modelo=null; //Singleton
-    private $dbh=null;
+    private static $modelo = null;
+    private $dbh = null;
+    private $stmt_clientes = null;
+    private $stmt_cliente = null;
+    private $stmt_borrcliente = null;
+    private $stmt_crearcliente = null;
+    private $stmt_modcliente = null;
 
     //metodos
 
@@ -88,8 +93,43 @@ class AcessoDatos{
     return $cliente;
    }
 
-   //
+   public function borrarCliente($id) : bool {
+    $this->stmt_borrcliente->bindValue(':id', $id);
+    $this->stmt_borrcliente->execute();
+    $resu = ($this->stmt_borrcliente->rowCount () == 1);
+    return $resu;
+}
 
+public function crearCliente($cliente) : bool {            
+    $this->stmt_crearcliente->execute( [$cliente->first_name, $cliente->last_name, $cliente->email, $cliente->gender, $cliente->ip_address, $cliente->telefono]);
+    $resu = ($this->stmt_crearcliente->rowCount () == 1);
+    return $resu;
+}
+
+public function modCliente($cliente) : bool {
+    $this->stmt_modcliente->bindValue(":id",$cliente->id);
+    $this->stmt_modcliente->bindValue(':nombre',$cliente->first_name);
+    $this->stmt_modcliente->bindValue(':apellidos',$cliente->last_name);
+    $this->stmt_modcliente->bindValue(':email',$cliente->email);
+    $this->stmt_modcliente->bindValue(':genero',$cliente->gender);
+    $this->stmt_modcliente->bindValue(':dir_ip',$cliente->ip_address);
+    $this->stmt_modcliente->bindValue(':telefono',$cliente->telefono);
+    $this->stmt_modcliente->execute();
+    $resu = ($this->stmt_modcliente->rowCount () == 1);
+    return $resu;
+}
+
+public function totalClientes ():int{
+    $resu = $this->dbh->query(" Select Count(*) from Clientes");
+    $valor = $resu->fetch_array();
+    return ($valor[0]); 
+}
+
+ // Evito que se pueda clonar el objeto. (SINGLETON)
+ public function __clone()
+ { 
+     trigger_error('La clonación no permitida', E_USER_ERROR); 
+ }
 
 
 
