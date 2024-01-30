@@ -369,7 +369,6 @@ function crudPostAltaUsuario(){
     $rol=$_POST['NuevoRol'];
     if($db->addUsuario($usu,$passEncrypt,$rol)){
         $_SESSION['msg']="Usuario añadido <br>";
-        $_SESSION['msg'].=$passEncrypt;
     }else{
         $_SESSION['msg']="Error de alta";
     }
