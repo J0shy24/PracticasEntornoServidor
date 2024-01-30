@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    <h1>Mini Calculadora</h1>
+
+    <form action="./MiniCalculadora.php" method="post">
+        <label for="n1">1º Numero:</label><input type="number" name='numero1' id="n1">
+        <br>
+        <label for="n2">2º Numero:</label><input type="number" name='numero2' id="n2">
+        <div>
+            <input type="submit" name="operador" value="+">
+            <input type="submit" name="operador" value="-">
+            <input type="submit" name="operador" value="*">
+            <input type="submit" name="operador" value="/">
+        </div>
+        <br>
+        <div>
+            <input type="radio" name="conversion" id="deci" value="decimal"> <label for="deci">Decimal</label> 
+            <input type="radio" name="conversion" id="bina" value="binario"> <label for="bina">Binario</label>
+            <input type="radio" name="conversion" id="hexa" value="hexadecimal"> <label for="hexa">HexaDecimal</label> 
+        </div>
+    </form>
+</body>
+</html>
