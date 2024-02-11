@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
      }
 
      if(!isset($_SESSION['ordenAD'])){
-        $_SESSION['ordenAD']="";
+        $_SESSION['ordenAD']="ASC";
      }
 
     // Proceso de ordenes de CRUD clientes
