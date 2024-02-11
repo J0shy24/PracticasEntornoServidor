@@ -10,7 +10,7 @@
 <table>
 <tr>
 <?php foreach($cabeceras as $cabecera):?>
-<th><a href="<?="?orden=Ordenar&valor=$cabecera"?>"><?=$cabecera?></a></th>
+<th><a href="<?="?orden=Ordenar&valor=$cabecera"?>"><?php echo $cabecera; echo mostrarOrden($cabecera);?></a></th>
 <?php endforeach;?>
 </tr>
 <?php foreach ($tvalores as $valor): ?>

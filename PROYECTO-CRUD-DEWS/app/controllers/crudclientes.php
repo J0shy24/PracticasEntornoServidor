@@ -1,7 +1,5 @@
 <?php
 
-use Dompdf\Dompdf;
-
 function crudBorrar ($id){    
     $db = AccesoDatos::getModelo();
     $resu = $db->borrarCliente($id);
@@ -335,6 +333,18 @@ function mostrarFoto($id){
         return "<img src='https://robohash.org/$fotoName' alt='foto robo' style='width: 100px; height: 20%'/>";
     }
 }
+
+function mostrarOrden($orden){
+    if($_SESSION['orderedBy']==$orden){
+        if($_SESSION['ordenAD']=='ASC'){
+            return "<span> ↑ </span>";
+        }else if ($_SESSION['ordenAD']=='DESC'){
+            return "<span> ↓ </span>";
+        }
+    }
+
+    return null;
+}
 //MEjora 8y9
 function verificarUsuario($usu,$pw){
     $db = AccesoDatos::getModelo();
@@ -403,8 +413,4 @@ function subircambiarFoto($id){
             move_uploaded_file($fileTmpName,$fotoRuta);
         }
     }
- 
-
-
-
 }
