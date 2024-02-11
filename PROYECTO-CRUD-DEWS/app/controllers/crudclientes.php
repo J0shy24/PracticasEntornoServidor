@@ -249,9 +249,9 @@ function crudPostModificar(){
     if ($check){
         subircambiarFoto($cli->id);
         crudModificar($cli->id);
-        $_SESSION['msg'] = " El usuario ha sido modificado";
+        header('Location: index.php');
     } else {
-        $_SESSION['msg'] .= " Error al modificar el usuario ";
+        crudModificar($cli->id);
     }
 
 }

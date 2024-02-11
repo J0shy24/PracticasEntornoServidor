@@ -35,4 +35,5 @@
 <button type="submit" name="nav" value="Anterior"> < </button>
 <button type="submit" name="nav" value="Siguiente"> > </button>
 <button type="submit" name="nav" value="Ultimo"> >> </button>
+<button type="submit" name="nav" value="desconectar">Cerrar Sesion</button>
 </form>

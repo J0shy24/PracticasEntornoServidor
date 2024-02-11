@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
             case "Siguiente": $posAux +=FPAG; if ($posAux > $posfin) $posAux=$posfin; break;
             case "Anterior" : $posAux -=FPAG; if ($posAux < 0) $posAux =0; break;
             case "Ultimo"   : $posAux = $posfin;
+            case "desconectar": session_destroy(); header('Location: index.php'); break;
         }
         $_SESSION['posini'] = $posAux;
     }
@@ -88,9 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
     // Proceso de ordenes de CRUD clientes
     if ( isset($_GET['orden'])){
         switch ($_GET['orden']) {
-            case "Nuevo"    : crudAlta(); break;
-            case "Borrar"   : crudBorrar   ($_GET['id']); break;
-            case "Modificar": crudModificar($_GET['id']); break;
+            case "Nuevo"    :if($_SESSION['rol']==1){ crudAlta();}else{$_SESSION['msg']="No tienes el permiso para realizar la acción";} break;
+            case "Borrar"   : if($_SESSION['rol']==1){crudBorrar   ($_GET['id']);}else{$_SESSION['msg']="No tienes el permiso para realizar la acción";} break;
+            case "Modificar": if($_SESSION['rol']==1){crudModificar($_GET['id']);}else{$_SESSION['msg']="No tienes el permiso para realizar la acción";} break;
             case "Detalles" : crudDetalles ($_GET['id']);break;
             case "Terminar" : crudTerminar(); break;
             case "Ordenar"  : 
@@ -101,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
                     $_SESSION['ordenAD']="ASC";
                 }
                 break;
-            case "NuevoUsuario": nuevoUsuario(); break;
+            case "NuevoUsuario": if($_SESSION['rol']==1){nuevoUsuario();}else{$_SESSION['msg']="No tienes el permiso para realizar la acción";} break;
         }
     }
 } 
